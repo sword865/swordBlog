@@ -150,17 +150,14 @@ for ( int i = 0; i &lt; m_numMeshes; i++ )
 
 通过这种方法，就可以在程序中绘制一个个的具体模型：
 
-[<img class="alignnone  wp-image-127" src="http://blog.sword865.com/wp-content/uploads/2015/02/ballfight-300x168.jpg" alt="ballfight" width="352" height="197" />][2]
+<img class="alignnone  wp-image-127" src="http://blog.sword865.com/wp-content/uploads/2015/02/ballfight-300x168.jpg" alt="ballfight" width="352" height="197" />
 
 &nbsp;
 
-<http://blog.sina.com.cn/s/blog_62d98a550100g5hh.html>
+[1]<http://blog.sina.com.cn/s/blog_62d98a550100g5hh.html>
 
-<http://www.yakergong.net/nehe/course/tutorial_31.html>
+[2]<http://www.yakergong.net/nehe/course/tutorial_31.html>
 
 <p style="margin:0;padding:0;height:1px;overflow:hidden;">
   <a href="http://www.wumii.com/widget/relatedItems" style="border:0;"><img src="http://static.wumii.cn/images/pixel.png" alt="无觅相关文章插件，快速提升流量" style="border:0;padding:0;margin:0;" /></a>
 </p>
-
- [1]: http://blog.sword865.com/wp-content/uploads/2015/02/ms3d.jpg
- [2]: http://blog.sword865.com/wp-content/uploads/2015/02/ballfight.jpg

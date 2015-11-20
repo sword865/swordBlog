@@ -18,11 +18,11 @@ Taxonomies:
   category: "categories"
 params:
   CopyrightHTML: "Copyright &#xA9; 2015. All Rights Reserved."
-  GitHubUser: "coderzh"
+  GitHubUser: "luosha865"
   SidebarRecentLimit: 5
   DateForm : "2006年01月02日"
-  Description: "阁中悟剑，红尘练心。"
-  Keywords: "独立博客,程序员,读书笔记,技术分享"
+  description: "阁中悟剑，红尘练心。"
+  author: "罗刹剑客"
 menu:
   main:
       - Name: "归档"
@@ -35,8 +35,6 @@ menu:
         Identifier: "about"
         Weight: -100
         URL: "/about/"
-author:
-  name: "罗刹剑客"
 
 images:
   - 480x
