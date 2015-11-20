@@ -20,7 +20,7 @@ MS3D的文件有着非常简单良好的文件结构，可从该文件中完美�
 
 MS3D全名为MilkShape3D，是一款简单小巧的3D可视化图形建模工具，可以简单的使用各种点、线面等基本图形元素组合建立模型，并进行贴图，分组。进一步的，该工具还支持简单的骨骼动画制作，是一款非常好用的3D图形构建工具。
 
-[<img class="alignnone  wp-image-125" src="http://sword865.com/blog/wp-content/uploads/2015/02/ms3d-300x164.jpg" alt="ms3d" width="428" height="234" />][1]
+[<img class="alignnone  wp-image-125" src="http://blog.sword865.com/wp-content/uploads/2015/02/ms3d-300x164.jpg" alt="ms3d" width="428" height="234" />][1]
 
 在建立了MS3D中完成模型建立后可保存为.ms3d的文件格式，通过对该文件格式进行分析，就可以了解文件结构，以在程序中通过读取该文件重现所见模型。
 
@@ -150,7 +150,7 @@ for ( int i = 0; i &lt; m_numMeshes; i++ )
 
 通过这种方法，就可以在程序中绘制一个个的具体模型：
 
-[<img class="alignnone  wp-image-127" src="http://sword865.com/blog/wp-content/uploads/2015/02/ballfight-300x168.jpg" alt="ballfight" width="352" height="197" />][2]
+[<img class="alignnone  wp-image-127" src="http://blog.sword865.com/wp-content/uploads/2015/02/ballfight-300x168.jpg" alt="ballfight" width="352" height="197" />][2]
 
 &nbsp;
 
@@ -162,5 +162,5 @@ for ( int i = 0; i &lt; m_numMeshes; i++ )
   <a href="http://www.wumii.com/widget/relatedItems" style="border:0;"><img src="http://static.wumii.cn/images/pixel.png" alt="无觅相关文章插件，快速提升流量" style="border:0;padding:0;margin:0;" /></a>
 </p>
 
- [1]: http://sword865.com/blog/wp-content/uploads/2015/02/ms3d.jpg
- [2]: http://sword865.com/blog/wp-content/uploads/2015/02/ballfight.jpg
+ [1]: http://blog.sword865.com/wp-content/uploads/2015/02/ms3d.jpg
+ [2]: http://blog.sword865.com/wp-content/uploads/2015/02/ballfight.jpg
