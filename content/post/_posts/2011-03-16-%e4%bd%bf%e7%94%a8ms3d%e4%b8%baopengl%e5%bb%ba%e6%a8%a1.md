@@ -158,6 +158,4 @@ for ( int i = 0; i &lt; m_numMeshes; i++ )
 
 [2]<http://www.yakergong.net/nehe/course/tutorial_31.html>
 
-<p style="margin:0;padding:0;height:1px;overflow:hidden;">
-  <a href="http://www.wumii.com/widget/relatedItems" style="border:0;"><img src="http://static.wumii.cn/images/pixel.png" alt="无觅相关文章插件，快速提升流量" style="border:0;padding:0;margin:0;" /></a>
-</p>
+

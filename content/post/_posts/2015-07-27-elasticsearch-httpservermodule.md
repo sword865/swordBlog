@@ -98,6 +98,4 @@ http://my.oschina.net/flashsword/blog/178561
 
 http://my.oschina.net/flashsword/blog/197963
 
-<p style="margin:0;padding:0;height:1px;overflow:hidden;">
-  <a href="http://www.wumii.com/widget/relatedItems" style="border:0;"><img src="http://static.wumii.cn/images/pixel.png" alt="无觅相关文章插件，快速提升流量" style="border:0;padding:0;margin:0;" /></a>
-</p>
+

@@ -23,6 +23,7 @@ params:
   DateForm : "2006年01月02日"
   description: "阁中悟剑，红尘练心。"
   author: "罗刹剑客"
+  disqusShortname: "sword865"
 menu:
   main:
       - Name: "归档"

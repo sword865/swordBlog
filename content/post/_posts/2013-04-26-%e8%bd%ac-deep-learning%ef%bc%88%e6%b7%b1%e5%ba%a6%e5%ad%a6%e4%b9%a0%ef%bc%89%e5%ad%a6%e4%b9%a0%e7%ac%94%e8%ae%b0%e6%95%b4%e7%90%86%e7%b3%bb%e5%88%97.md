@@ -21,6 +21,4 @@ tags:
 
 <http://deeplearning.stanford.edu/wiki/index.php/UFLDL%E6%95%99%E7%A8%8B>
 
-<p style="margin:0;padding:0;height:1px;overflow:hidden;">
-  <a href="http://www.wumii.com/widget/relatedItems" style="border:0;"><img src="http://static.wumii.cn/images/pixel.png" alt="无觅相关文章插件，快速提升流量" style="border:0;padding:0;margin:0;" /></a>
-</p>
+
