@@ -7,7 +7,7 @@ import shutil
 def main():
 	if os.path.exists('public'):
 		shutil.rmtree('public')
-	os.system('hugo server --theme=hyde --buildDrafts --watch')
+	os.system('hugo server --buildDrafts --watch')
 	#'hugo server -w -t rapid')
 
 

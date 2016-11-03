@@ -24,12 +24,13 @@ class ChDir:
 
 
 def main():
-    os.system('hugo --theme=hyde --baseUrl="http://luosha865.github.io/"')
+    os.system('hugo --baseUrl="http://luosha865.github.io/"')
     with ChDir("public"):
+        os.system('git init')
+        os.system('git remote add origin '+GIT_HUB_REPO)
         os.system('git add --all')
         os.system('git commit -m "commit"')
         os.system('git push -u origin master')
 
 if __name__ == '__main__':
     main()
-

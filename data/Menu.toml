@@ -1,0 +1,13 @@
+[about]
+    Name = "关于我"
+    URL = "/about"
+
+[posts]
+    Name = "我的文章"
+    Title = "Show list of posts"
+    URL = "/post"
+
+[tags]
+    Name = "标签列表"
+    Title = "Show list of tags"
+    URL = "/tags"
