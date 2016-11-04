@@ -1,10 +1,10 @@
 +++
 author = "author"
 date = "2016-11-04T22:47:21+08:00"
-description = "description"
+description = "聊聊因子分解机模型的基本形式和一些变化"
 keywords = ["key", "words"]
 tags = ["CTR", "FM"]
-title = "2016 11 04 谈谈Factorization Machine"
+title = "谈谈Factorization Machine"
 topics = ["topic 1"]
 type = "post"
 
