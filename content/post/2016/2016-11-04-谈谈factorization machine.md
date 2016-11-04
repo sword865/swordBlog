@@ -34,7 +34,7 @@ $$y(x) = w_0 + \sum_{i=1}^{n} w_i x_i } + \sum_{i=1}^{n} \sum_{j=i+1}^{n} v_{i} 
 
 也就是：
 
-$$y(x) = w_0 + \sum_{i=1}^{n} w_i x_i } + \sum_{i=1}^{n} \sum_{j=i+1}^{n} \sum_{h=i}^{k} v_{i,k} v_{j,k} x_i x_j$$
+$$y(x) = w_0 + \sum_{i=1}^{n} w_i x_i } + \sum_{i=1}^{n} \sum_{j=i+1}^{n} \sum_{h=i}^{k} v_{i,h} v_{j,h} x_i x_j$$
 
 可以看出，W中的参数现在只有nk个了，因为一般有k<<n，所以FM大大降低的目标函数的复杂度。
 
