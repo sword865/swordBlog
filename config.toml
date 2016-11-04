@@ -13,8 +13,6 @@ theme = "hyde-y"
 # Pagination
 paginate = 8
 paginatePath = "page"
-# Enable Disqus integration
-disqusShortname = "sword865"
 disablePathToLower = true
 hasCJKLanguage = true
 [permalinks]
@@ -29,6 +27,8 @@ hasCJKLanguage = true
 # All parameters below here are optional and can be mixed and matched.
 #
 [params]
+    # use duoshuoShortname
+    duoshuoShortname  = "sword865"
     # You can use markdown here.
     brand = "悟剑阁"
     topline = "阁中悟剑，红尘练心"
