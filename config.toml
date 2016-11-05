@@ -11,7 +11,7 @@ metaDataFormat = "toml"
 # Theme to use (located in /themes/THEMENAME/)
 theme = "hyde-y"
 # Pagination
-paginate = 8
+paginate = 9
 paginatePath = "page"
 disablePathToLower = true
 hasCJKLanguage = true
@@ -19,6 +19,7 @@ hasCJKLanguage = true
     post = "/:year/:month/:day/:slug/"
 [taxonomies]
     tag = "tags"
+    category = "categories"
     topic = "topics"
 [author]
     name = "罗刹剑客"

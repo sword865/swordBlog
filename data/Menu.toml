@@ -7,6 +7,11 @@
     Title = "Show list of posts"
     URL = "/post"
 
+[categories]
+    Name = "分类"
+    Title = "Show list of categories"
+    URL = "categories"
+
 [tags]
     Name = "标签列表"
     Title = "Show list of tags"

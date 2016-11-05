@@ -5,7 +5,7 @@ description = "聊聊因子分解机模型的基本形式和一些变化"
 keywords = ["key", "words"]
 tags = ["CTR", "FM"]
 title = "谈谈Factorization Machine"
-topics = ["topic 1"]
+categories = "机器学习"
 type = "post"
 
 +++
