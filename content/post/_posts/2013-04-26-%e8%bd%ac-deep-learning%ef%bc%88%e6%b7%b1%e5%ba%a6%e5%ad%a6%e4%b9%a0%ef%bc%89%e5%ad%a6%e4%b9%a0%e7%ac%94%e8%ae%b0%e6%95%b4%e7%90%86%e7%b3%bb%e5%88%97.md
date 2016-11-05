@@ -4,6 +4,7 @@ author: luosha865
 layout: post
 date: 2013-04-26
 url: /archives/7
+description: 转一套深度学习的资料
 posturl_add_url:
   - no
 categories:
@@ -15,10 +16,6 @@ tags:
 
 <http://blog.csdn.net/zouxy09/article/details/8775360>
 
-&nbsp;
-
 顺便附上翻译的UFLDL
 
 <http://deeplearning.stanford.edu/wiki/index.php/UFLDL%E6%95%99%E7%A8%8B>
-
-
