@@ -44,6 +44,7 @@ hasCJKLanguage = true
     highlight = "default"
     # Google Analytics.
     # googleAnalytics = "Your Google Analytics tracking code"
+    cnzzID = "1260888787"
     # Sidebar social links.
     github = "luosha865" # Your Github profile ID
     bitbucket = "" # Your Bitbucket profile ID

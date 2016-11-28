@@ -30,3 +30,8 @@
 
 </script>
 {{ end }}
+
+{{ with .Site.Params.cnzzID }}
+<script src="https://s95.cnzz.com/z_stat.php?id={{ . }}&web_id={{ . }}" language="JavaScript"></script>
+
+{{ end }}
