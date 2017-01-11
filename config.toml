@@ -29,7 +29,7 @@ hasCJKLanguage = true
 #
 [params]
     # use duoshuoShortname
-    duoshuoShortname  = "sword865"
+    gentieKey = "543cd58c6e7b44ad8fade1767e9fbef2"
     # You can use markdown here.
     brand = "悟剑阁"
     topline = "阁中悟剑，红尘练心"
