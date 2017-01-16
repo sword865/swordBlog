@@ -8,7 +8,7 @@ import shutil
 import subprocess
 
 
-GIT_HUB_REPO = 'git@github.com:luosha865/luosha865.github.io.git'
+GIT_HUB_REPO = 'git@github.com:sword865/luosha865.github.io.git'
 
 class ChDir:
     """Context manager for changing the current working directory"""
