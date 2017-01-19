@@ -11,6 +11,6 @@ def main():
     os.system('git rebase origin/master')
     os.system('git push origin master')
 
+
 if __name__ == '__main__':
     main()
-

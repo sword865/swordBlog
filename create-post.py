@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # coding:utf-8
-
-__author__ = 'coderzh'
+# author= 'coderzh'
 
 import os
 import re
@@ -29,7 +28,7 @@ if __name__ == '__main__':
         post_name=post_name
     )
 
-    replace_patterns =[
+    replace_patterns = [
         (re.compile(r'title:(.*)'), 'title: "%s"' % post_name),
         (re.compile(r'url:(.*)'), 'url: "%s/"' % url),
         (re.compile(r'\n---'), r'\n\n---'),
@@ -40,4 +39,3 @@ if __name__ == '__main__':
 
     with open(post_rel_path, 'w') as f:
         f.write(content)
-

@@ -2,11 +2,10 @@
 # coding:utf-8
 
 import os
-import shutil
+
 
 def main():
-	os.system('hugo server --buildDrafts --watch')
-	#'hugo server -w -t rapid')
+    os.system('hugo server --buildDrafts --watch')
 
 
 if __name__ == '__main__':
