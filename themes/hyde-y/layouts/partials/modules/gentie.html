@@ -1,4 +1,4 @@
-{{ if and (isset .Site.Params "gentieKey") (ne .Site.Params.gentieKey "") }}
+{{ if and (.Site.Params.gentieKey) (ne .Site.Params.gentieKey "") }}
 <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
 <script>
     var cloudTieConfig = {
