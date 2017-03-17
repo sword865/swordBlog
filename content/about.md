@@ -1,6 +1,6 @@
 ---
 title: 关于
-author: luosha865
+author: sword865
 layout: page
 date: 2014-12-07
 posturl_add_url:

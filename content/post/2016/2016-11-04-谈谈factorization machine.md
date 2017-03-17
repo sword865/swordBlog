@@ -1,8 +1,7 @@
 +++
-author = "author"
+author = "sword865"
 date = "2016-11-04T22:47:21+08:00"
 description = "聊聊因子分解机模型的基本形式和一些变化"
-keywords = ["key", "words"]
 tags = ["CTR", "FM"]
 title = "谈谈Factorization Machine"
 categories = "机器学习"

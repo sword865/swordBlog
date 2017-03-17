@@ -28,7 +28,7 @@ hasCJKLanguage = true
 # All parameters below here are optional and can be mixed and matched.
 #
 [params]
-    # use duoshuoShortname
+    # for wangyi cloud gentie
     gentieKey = "543cd58c6e7b44ad8fade1767e9fbef2"
     # You can use markdown here.
     brand = "悟剑阁"

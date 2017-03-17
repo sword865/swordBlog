@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding:utf-8
-# author= 'coderzh'
+# origin-author= 'coderzh'
 
 import os
 import re
@@ -9,6 +9,7 @@ from datetime import datetime
 
 if __name__ == '__main__':
     post_name = raw_input("Post'title: ")
+    author_name = "sword865"
 
     post_path = 'post/{year}/{date_format}-{post_name}.md'.format(
         year=datetime.now().year,
@@ -31,6 +32,7 @@ if __name__ == '__main__':
     replace_patterns = [
         (re.compile(r'title:(.*)'), 'title: "%s"' % post_name),
         (re.compile(r'url:(.*)'), 'url: "%s/"' % url),
+        (re.compile(r'author:(.*)'), 'author: "%s/"' % author_name),
         (re.compile(r'\n---'), r'\n\n---'),
     ]
 

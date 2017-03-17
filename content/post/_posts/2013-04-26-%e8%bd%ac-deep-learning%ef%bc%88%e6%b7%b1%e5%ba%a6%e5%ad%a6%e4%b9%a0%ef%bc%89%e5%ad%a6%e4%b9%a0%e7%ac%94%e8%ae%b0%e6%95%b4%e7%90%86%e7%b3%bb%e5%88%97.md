@@ -1,6 +1,6 @@
 ---
 title: '[转] Deep Learning（深度学习）学习笔记整理系列'
-author: luosha865
+author: sword865
 layout: post
 date: 2013-04-26
 url: /archives/7
