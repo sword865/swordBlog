@@ -1,7 +1,7 @@
 ---
 title: Elasticsearch-HttpServerModule
 author: sword865
-layout: post
+type: post
 date: 2015-07-27
 url: /archives/150
 posturl_add_url:

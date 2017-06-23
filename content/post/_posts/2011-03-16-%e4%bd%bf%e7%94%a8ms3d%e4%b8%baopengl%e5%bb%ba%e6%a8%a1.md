@@ -1,7 +1,7 @@
 ---
 title: 简单讲一下使用MS3D为opengl建模
 author: sword865
-layout: post
+type: post
 date: 2011-03-16
 url: /archives/124
 posturl_add_url:
