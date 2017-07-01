@@ -40,29 +40,20 @@ MS3D全名为MilkShape3D，是一款简单小巧的3D可视化图形建模工具
 
 在分析了解了MS3D的文件格式后，就可以通过编写程序读取MS3D文件并根据该文件建立模型了，对应于MS3D的不同分段，可以依次建立6种结构体分别对应每段内容：
 
-MS3DHeader     /\*包含ms3d文件的版本信息\*
-
-MS3DVertex     /\*顶点信息\*/
-
-MS3DMaterial   /\*材质(纹理贴图等)信息\*/
-
-MS3DTriangle   /\*绘制三角形信息\*/
-
-MS3DJoint      /\*节点(骨骼)信息\*/
-
-MS3DKeyframe   /\*关键窗口\*/
-
-如：
-
-<pre class="lang:c++ decode:true" title="点结构">struct MS3DVertex
-{
-  unsigned char m_ucFlags;   //编辑器用标志
-  CVector3 m_vVert;        //x,y,z的坐标
-  char m_cBone;        //Bone ID （-1 ,没有骨头）
-  unsigned char m_mcUnused;      //保留，未使用
-};</pre>
-
-&nbsp;
+    MS3DHeader     /\*包含ms3d文件的版本信息\*
+    MS3DVertex     /\*顶点信息\*/
+    MS3DMaterial   /\*材质(纹理贴图等)信息\*/
+    MS3DTriangle   /\*绘制三角形信息\*/
+    MS3DJoint      /\*节点(骨骼)信息\*/
+    MS3DKeyframe   /\*关键窗口\*/
+    //an example for vertex
+    struct MS3DVertex
+    {
+      unsigned char m_ucFlags;   //编辑器用标志
+      CVector3 m_vVert;        //x,y,z的坐标
+      char m_cBone;        //Bone ID （-1 ,没有骨头）
+      unsigned char m_mcUnused;      //保留，未使用
+    };
 
 (1)第一个成员表示了该顶点在编辑器中的状态（引擎中不是必须）其各个值的含义如下：
 
@@ -84,29 +75,26 @@ MS3DKeyframe   /\*关键窗口\*/
 
 多边形（三角形）结构读取示范：
 
-<pre class="lang:c++ decode:true">//内存空间分配
-// pPtr为文件读取偏移指针
-int nTriangles = *( word* )pPtr;
-m_numTriangles = nTriangles;
-m_pTriangles = new Triangle[nTriangles];
-pPtr += sizeof( word );
-//读取每个三角型
-for ( i = 0; i &lt; nTriangles; i++ )
-{
-  MS3DTriangle *pTriangle = ( MS3DTriangle* )pPtr;
-  int vertexIndices[3] = { pTriangle-&gt;m_vertexIndices[0], pTriangle-&gt;m_vertexIndices[1], pTriangle-&gt;m_vertexIndices[2] };
-  float t[3] = { 1.0f-pTriangle-&gt;m_t[0], 1.0f-pTriangle-&gt;m_t[1], 1.0f-pTriangle-&gt;m_t[2] };
-  //数据读取
-  memcpy( m_pTriangles[i].m_vertexNormals, pTriangle-&gt;m_vertexNormals, sizeof( float )*3*3 );
-  memcpy( m_pTriangles[i].m_s, pTriangle-&gt;m_s, sizeof( float )*3 );
-  memcpy( m_pTriangles[i].m_t, t, sizeof( float )*3 );
-  memcpy( m_pTriangles[i].m_vertexIndices, vertexIndices, sizeof( int )*3 );
-  //文件读取指针前进
-  pPtr += sizeof( MS3DTriangle );
-}
-</pre>
-
-&nbsp;
+    //内存空间分配
+    // pPtr为文件读取偏移指针
+    int nTriangles = *( word* )pPtr;
+    m_numTriangles = nTriangles;
+    m_pTriangles = new Triangle[nTriangles];
+    pPtr += sizeof( word );
+    //读取每个三角型
+    for ( i = 0; i &lt; nTriangles; i++ )
+    {
+      MS3DTriangle *pTriangle = ( MS3DTriangle* )pPtr;
+      int vertexIndices[3] = { pTriangle-&gt;m_vertexIndices[0], pTriangle-&gt;m_vertexIndices[1], pTriangle-&gt;m_vertexIndices[2] };
+      float t[3] = { 1.0f-pTriangle-&gt;m_t[0], 1.0f-pTriangle-&gt;m_t[1], 1.0f-pTriangle-&gt;m_t[2] };
+      //数据读取
+      memcpy( m_pTriangles[i].m_vertexNormals, pTriangle-&gt;m_vertexNormals, sizeof( float )*3*3 );
+      memcpy( m_pTriangles[i].m_s, pTriangle-&gt;m_s, sizeof( float )*3 );
+      memcpy( m_pTriangles[i].m_t, t, sizeof( float )*3 );
+      memcpy( m_pTriangles[i].m_vertexIndices, vertexIndices, sizeof( int )*3 );
+      //文件读取指针前进
+      pPtr += sizeof( MS3DTriangle );
+    }
 
 要注意得是，因为MS3D使用窗口坐标系而OpenGL使用笛卡儿坐标系，所以需要反转每个顶点Y方向的纹理坐标
 
@@ -126,27 +114,25 @@ Vertex   /\*定点\*/
 
 在读入MS3D文件后，可以使用OPENGL函数根据读入的数据与模型的信息，按网格分组，分别绘制每一组的数据。
 
-<pre class="lang:c++ decode:true ">//按网格分组绘制
-for ( int i = 0; i &lt; m_numMeshes; i++ )
-{
-  //材质，贴图等
-  ………………………
-  //开始绘制多边形（三角形）
-  glBegin( GL_TRIANGLES );
-  {
-    for ( int j = 0; j &lt; m_pMeshes[i].m_numTriangles; j++ ){
-    ……………………….
-    //三角形所有顶点绘制
-    for ( int k = 0; k &lt; 3; k++ )
+    //按网格分组绘制
+    for ( int i = 0; i &lt; m_numMeshes; i++ )
     {
-      //单个点的绘制
-      ………………….
+      //材质，贴图等
+      ………………………
+      //开始绘制多边形（三角形）
+      glBegin( GL_TRIANGLES );
+      {
+        for ( int j = 0; j &lt; m_pMeshes[i].m_numTriangles; j++ ){
+        ……………………….
+        //三角形所有顶点绘制
+        for ( int k = 0; k &lt; 3; k++ )
+        {
+          //单个点的绘制
+          ………………….
+        }
+      }
+      glEnd();
     }
-  }
-  glEnd();
-}</pre>
-
-&nbsp;
 
 通过这种方法，就可以在程序中绘制一个个的具体模型：
 
