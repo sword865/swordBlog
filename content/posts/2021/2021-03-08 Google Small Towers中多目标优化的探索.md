@@ -51,7 +51,7 @@ $$f_t^a(x; \theta_{sh}, \theta_t^a))=f_t(h(x;\theta_{sh}); \theta_t^a), \forall 
 
 修改后多目标模型的结构是这样的：
 
-<img width="500"  src="../images/google_m_towner.png" class="center" />
+<img width="500"  src="/images/2021/google_m_towner.png" class="center" />
 
 ### 损失函数
 
@@ -69,7 +69,7 @@ $$\hat{L}(\theta)=\sum_{t=1}^Tw_t(\hat{L}(\theta_{sh},\theta_t)+\gamma \hat{L}(\
 
 这里对小塔的结构没有什么限制，唯一的要求就是要比模型简单，下面是文章里的一些例子：
 
-<img src="../images/google_m_tower_small_tower.png" />
+<img src="/images/2021/google_m_tower_small_tower.png" />
 
 最后主要就是附录中的证明与实验细节了，建议直接读原文了解。
 
