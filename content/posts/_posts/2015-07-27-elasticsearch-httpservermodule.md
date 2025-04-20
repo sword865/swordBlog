@@ -6,8 +6,7 @@ date: 2015-07-27
 url: /archives/150
 posturl_add_url:
   - yes
-categories:
-  - 后台
+categories: 后台
 tags:
   - elasticsearch
   - httpserver
@@ -26,7 +25,7 @@ NettyHttpServerTransport基于netty框架，负责监听并建立连接，信息
 
 在流Pipeline里有一个Map(name2ctx)和一个链表(记录head和tail)，pipeline里面会调度关联的多个channelhandler的运行。
 
-<a href="http://static.oschina.net/uploads/space/2013/1109/075339_Kjw6_190591.png"><img src="http://static.oschina.net/uploads/space/2013/1109/075339_Kjw6_190591.png" alt="channel pipeline" /></a>
+<a href="/posts/_posts/images/0753391.png"><img src="/posts/_posts/images/0753391.png" alt="channel pipeline" /></a>
 
 在NettyHttpServerTransport中，会流过的channelhandler就包括解码http请求(把多个HttpChunk拼起来并按http协议进行解析)和http请求处理。
 
