@@ -1,5 +1,5 @@
 # hostname (and path) to the root eg. http://spf13.com/
-baseurl = "http://blog.sword865.com"
+baseurl = "https://sword865.github.io/"
 # Site title
 title = "悟剑阁"
 # Copyright
@@ -9,10 +9,11 @@ languageCode = "zh-CN"
 # Metadata format: "yaml", "toml", "json"
 metaDataFormat = "toml"
 # Theme to use (located in /themes/THEMENAME/)
-theme = "hyde-y"
+theme = "diary"
 # Pagination
-paginate = 9
-paginatePath = "page"
+[pagination]
+    pagerSize = 9
+    path = "page"
 disablePathToLower = true
 hasCJKLanguage = true
 [permalinks]
@@ -21,15 +22,17 @@ hasCJKLanguage = true
     tag = "tags"
     category = "categories"
     topic = "topics"
-[author]
-    name = "罗刹剑客"
-    email = "sword865@163.com"
-#
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
 # All parameters below here are optional and can be mixed and matched.
-#
 [params]
-    # for wangyi cloud gentie
-    gentieKey = "543cd58c6e7b44ad8fade1767e9fbef2"
+    [authors]
+        name = "罗刹剑客"
+        email = "sword865@163.com"
     # You can use markdown here.
     brand = "悟剑阁"
     topline = "阁中悟剑，红尘练心"
