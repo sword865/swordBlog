@@ -21,7 +21,7 @@ class ChDir:
 
 
 def main():
-    os.system('hugo --baseUrl="http://blog.sword865.com/"')
+    os.system('hugo --baseUrl="https://sword865.github.io"')
     with ChDir("public"):
         os.system('git add --all')
         os.system('git commit -m "commit"')
