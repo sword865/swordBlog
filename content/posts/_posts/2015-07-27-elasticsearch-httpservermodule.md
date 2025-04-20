@@ -13,9 +13,9 @@ tags:
   - netty
   - 搜索
 ---
-HttpServerModule的请求主要由HttpServer中的HttpServerTransport(默认为NettyHttpServerTransport）类处理。
+HttpServerModule的请求主要由HttpServer中的HttpServerTransport （默认为NettyHttpServerTransport）类处理。
 
-NettyHttpServerTransport基于netty框架，负责监听并建立连接，信息的处理由内部类HttpChannelPipelineFactory完成。
+NettyHttpServerTransport基于netty框架，负责监听并建立连接，信息的处理由内部类HttpChannelPipelineFactory 完成。
 
 每当产生一个连接时，都会发出一个ChannelEvent，该Event由一系列的ChannelHandler进行处理。
 
@@ -33,7 +33,47 @@ NettyHttpServerTransport基于netty框架，负责监听并建立连接，信息
 
 RestController中的处理代码为：
 
-<pre class="lang:java decode:true ">void executeHandler(RestRequest request, RestChannel channel) throws Exception {
+
+<pre class="lang:java decode:true ">
+void executeHandler(RestRequest request, RestChannel channel) throws Exception {
+        final RestHandler handler = getHandler(request);
+        if (handler != null) {
+            handler.handleRequest(request, channel);
+        } else {
+            if (request.method() == RestRequest.Method.OPTIONS) {
+                // when we have OPTIONS request, simply send OK by default 
+                // (with the Access Control Origin header which gets automatically added)
+                channel.sendResponse(new BytesRestResponse(OK));
+            } else {
+                channel.sendResponse(new BytesRestResponse(
+                    BAD_REQUEST, 
+                    "No handler found for uri [" + request.uri() + "] and method [" + request.method() + "]"
+                ));
+            }
+        }
+    }
+
+    private RestHandler getHandler(RestRequest request) {
+        String path = getPath(request);
+        RestRequest.Method method = request.method();
+        if (method == RestRequest.Method.GET) {
+            return getHandlers.retrieve(path, request.params());
+        } else if (method == RestRequest.Method.POST) {
+            return postHandlers.retrieve(path, request.params());
+        } else if (method == RestRequest.Method.PUT) {
+            return putHandlers.retrieve(path, request.params());
+        } else if (method == RestRequest.Method.DELETE) {
+            return deleteHandlers.retrieve(path, request.params());
+        } else if (method == RestRequest.Method.HEAD) {
+            return headHandlers.retrieve(path, request.params());
+        } else if (method == RestRequest.Method.OPTIONS) {
+            return optionsHandlers.retrieve(path, request.params());
+        } else {
+            return null;
+        }
+    }</pre>
+
+void executeHandler(RestRequest request, RestChannel channel) throws Exception {
         final RestHandler handler = getHandler(request);
         if (handler != null) {
             handler.handleRequest(request, channel);
@@ -65,7 +105,8 @@ RestController中的处理代码为：
         } else {
             return null;
         }
-    }</pre>
+    }
+</pre>
 
 可以看到，这里会根据注册的handler，选择合适的处理逻辑。
 
