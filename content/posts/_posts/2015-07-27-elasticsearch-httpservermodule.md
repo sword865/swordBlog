@@ -3,9 +3,6 @@ title: Elasticsearch-HttpServerModule
 author: sword865
 type: post
 date: 2015-07-27
-url: /archives/150
-posturl_add_url:
-  - yes
 categories: 后台
 tags:
   - elasticsearch

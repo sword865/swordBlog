@@ -3,10 +3,7 @@ title: '[转] Deep Learning（深度学习）学习笔记整理系列'
 author: sword865
 type: post
 date: 2013-04-26
-url: /archives/7
 description: 转一套深度学习的资料
-posturl_add_url:
-  - no
 categories: 机器学习
 tags:
   - 神经网络

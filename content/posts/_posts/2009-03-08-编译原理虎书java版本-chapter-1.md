@@ -3,9 +3,6 @@ title: 编译原理虎书java版本–Chapter 1
 author: sword865
 type: post
 date: 2009-03-08
-url: /archives/28
-posturl_add_url:
-  - yes
 categories: 编程语言
 tags:
   - 编译原理
