@@ -50,7 +50,10 @@ vLLM 最新版本就已经全部转向Flash Attention， 用cutlass实现了。
 
 在 A100 GPU 上，我们有：
 * 108个SM
-* 每个SM有4个Wrap scheduler(因此同时最多有4个Thread Wrap被调度到一个SM上)
+* 每个SM有4个Wrap scheduler
+  * 最多有4个Thread Wrap同时在一个SM上执行 
+* 每个Wrap scheduler有一个长度为16的调度队列
+  * 一个SM上最多可以调度64个Thread Wrap
 
 基本上这些数字在设计Kernel的时候都可以被考虑到，从而最大化一个Kernel的硬件利用率。
 
@@ -58,7 +61,7 @@ vLLM 最新版本就已经全部转向Flash Attention， 用cutlass实现了。
 
 ## vLLM Kernel 映射
 
-现在我们看一下vLLM Knerl的设计：(处于简化的目的，我们认为没有TP)
+现在我们看一下vLLM Kernel的设计：(处于简化的目的，我们认为没有TP)
 
 <img width="800"  src="/images/2025/20250420/vllm_kernel_map.png" class="center" />
 
