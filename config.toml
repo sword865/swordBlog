@@ -33,6 +33,16 @@ hasCJKLanguage = true
     path = 'github.com/hugomods/images'
     disable = false
 
+[[menu.main]]
+    url = "/tags"
+    name = "Tags"
+weight = 3
+[[menu.main]]
+    url = "/posts"
+    name = "Archive"
+    weight = 1
+
+
 # All parameters below here are optional and can be mixed and matched.
 [params]
     [authors]
