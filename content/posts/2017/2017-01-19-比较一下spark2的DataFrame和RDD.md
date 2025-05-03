@@ -54,7 +54,7 @@ DataSet和DataFrame可以通过df.as和ds.toDF方法方便的进行转化。
 
 最后，在效率上，在使用RDD的API时候，使用Python明显比Scala要慢上很多（据我们测试是慢了2倍以上）。但是在使用DataFame时，这个缺陷就不复存在了，换句话说，喜欢Python或者放不下各种Python扩展的同志们可以把Python写起来了，哈哈。这里放个国外网友测试的效率比较吧：
 
-<img src="../images/Spark_Dataframe_Official_Benchmark.png" />
+<img src="/images/2017/Spark_Dataframe_Official_Benchmark.png" />
 
 可以看到，速度上大致是 Scala DF = Python DF > Scala RDD > Python RDD，并且DF优势很显著。
 

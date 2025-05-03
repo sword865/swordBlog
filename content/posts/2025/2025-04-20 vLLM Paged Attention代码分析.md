@@ -9,7 +9,7 @@ topics = ["推理优化"]
 
 3月底整理了一个关于经典Paged Attention算法的ppt, 想起这个几年没写过的blog，把PPT改成一篇文章证明我还活着(-_-)。
 
-<img width="500"  src="../images/20250420/paged_attention.png" class="center" />
+<img width="500"  src="/images/2025/20250420/paged_attention.png" class="center" />
 
 ## vLLM 的 Paged Attention
 
@@ -50,17 +50,20 @@ vLLM 最新版本就已经全部转向Flash Attention， 用cutlass实现了。
 
 在 A100 GPU 上，我们有：
 * 108个SM
-* 每个SM有4个Wrap scheduler(因此同时最多有4个Thread Wrap被调度到一个SM上)
+* 每个SM有4个Wrap scheduler
+  * 最多有4个Thread Wrap同时在一个SM上执行 
+* 每个Wrap scheduler有一个长度为16的调度队列
+  * 一个SM上最多可以调度64个Thread Wrap
 
 基本上这些数字在设计Kernel的时候都可以被考虑到，从而最大化一个Kernel的硬件利用率。
 
-<img width="800"  src="../images/20250420/nvida_gpu.png" class="center" />
+<img width="800"  src="/images/2025/20250420/nvida_gpu.png" class="center" />
 
 ## vLLM Kernel 映射
 
-现在我们看一下vLLM Knerl的设计：(处于简化的目的，我们认为没有TP)
+现在我们看一下vLLM Kernel的设计：(处于简化的目的，我们认为没有TP)
 
-<img width="800"  src="../images/20250420/vllm_kernel_map.png" class="center" />
+<img width="800"  src="/images/2025/20250420/vllm_kernel_map.png" class="center" />
 
 设计Kernel的第一步是把程序拆分成不同的Thread Block来简化问题，vLLM中每个Thread Block会负责1个Query Token的一个Query Head的计算。
 > 这个设计其实比较粗糙。不过没关系，Flash Attention里有更多优化。
@@ -107,7 +110,7 @@ vLLM 最新版本就已经全部转向Flash Attention， 用cutlass实现了。
 
 讲了这么多终于开始计算了，先拿张图演示一下Query Token的访问：
 
-<img width="800"  src="../images/20250420/query_io.png" class="center" />
+<img width="800"  src="/images/2025/20250420/query_io.png" class="center" />
 
 ```
   constexpr int VEC_SIZE = MAX(16 / (THREAD_GROUP_SIZE * sizeof(scalar_t)), 1);
@@ -139,7 +142,7 @@ vLLM 最新版本就已经全部转向Flash Attention， 用cutlass实现了。
 
 ## Key Cache数据访问
 
-<img width="800"  src="../images/20250420/key_io.png" class="center" />
+<img width="800"  src="/images/2025/20250420/key_io.png" class="center" />
 
 和Query一样，每个thread按VEC访问数据，也是希望一次访问16Bytes，这也是Query最内层有一个X维度的原因。
 
@@ -217,7 +220,7 @@ vLLM 最新版本就已经全部转向Flash Attention， 用cutlass实现了。
 ## QK 计算
 Query和Key都读进来了，下一步自然就是矩阵乘了，还是先上个图：
 
-<img width="800"  src="../images/20250420/query_key_compute.png" class="center" />
+<img width="800"  src="/images/2025/20250420/query_key_compute.png" class="center" />
 
 基础的计算的逻辑就是上面代码里省略的部分
 ```
@@ -289,10 +292,10 @@ Query和Key都读进来了，下一步自然就是矩阵乘了，还是先上个
 ## Value访问和Attneion计算
 
 Value的访问比较直接，直接上图，就是大家一起把所有Value都读进来。
-<img width="800"  src="../images/20250420/value_io.png" class="center" />
+<img width="800"  src="/images/2025/20250420/value_io.png" class="center" />
 
 同时边读边计算，都在这个图里了：
-<img width="800"  src="../images/20250420/attention_compute.png" class="center" />
+<img width="800"  src="/images/2025/20250420/attention_compute.png" class="center" />
 
 就是先按block进行遍历，然后每次重block里读所有token的一部分维度进行计算，把所有维度都算出来，分散的存在各个thread里。
 
