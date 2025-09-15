@@ -35,7 +35,8 @@ Kernel的调用主要分两部分
 先看`get_mla_metadata`具体提供了哪些元数据，我们从repo提供的测试代码入手，考虑最简单的情况(batch_size=128, query_sequence_len=1, mean_key_sequence_len=4096, MTP=1, num_kv_head=1, num_q_head=16, TP=1, hidden_NoRoPE_dim=512, hidden_RoPE_dim=64, varlen=False)。
 
 ```
-# cache_seqlens = tensor([4096, 4096, ..., 4096], dtype=torch.int32), size=batch_size, value=sequence_len
+# cache_seqlens = tensor([4096, 4096, ..., 4096], dtype=torch.int32),
+#                         size=batch_size, value=sequence_len
 # s_q=1 (query_sequence_len=1且MTP=1), h_q(num_q_head)=128 (TP=1=128/128) h_kv(num_kv_head)=1
 # 基于这些配置，计算mla kernel的metadata
 tile_scheduler_metadata, num_splits = get_mla_metadata(cache_seqlens, s_q * h_q // h_kv, h_kv)
