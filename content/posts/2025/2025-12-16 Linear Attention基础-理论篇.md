@@ -130,9 +130,9 @@ $$ y_t = C_t h_t $$
 
 $$
 M = \begin{pmatrix}
-C_0 B_0 & 0 & \dots & 0 \\
-C_1 A_1 B_0 & C_1 B_1 & \dots & 0 \\
-\vdots & \vdots & \ddots & \vdots \\
+C_0 B_0 & 0 & \dots & 0 \\\\
+C_1 A_1 B_0 & C_1 B_1 & \dots & 0 \\\\
+\vdots & \vdots & \ddots & \vdots \\\\
 C_L A_L \dots A_1 B_0 & \dots & \dots & C_L B_L
 \end{pmatrix}
 $$
