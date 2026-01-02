@@ -315,14 +315,13 @@ def fft_conv(u, k, seqlen):
 - Chunk 内累积：$S[i+1] = S[i] + \sum_{t=1}^{C} v_t k_t^T = S[i] + V^T K$
 
 但是回忆一下理论篇的推导，在 **DeltaNet** 中， **Delta Rule**的更新规则会更加复杂：
-$$ S_t = S_{t-1}(I - \beta_t k_t k_t^{\top}) + \beta_t v_t k_t^{\top}. $$
+$$ S_t = S_{t-1}(I - \beta_t k_t k_t^{\top}) + \beta_t v_t k_t^{\top} $$
 
 现在让我们尝试在 Chunk 内做累积，就会发现很多计算效率上的问题：
 
 经过论文[Parallelizing Linear Transformers with the Delta Rule over Sequence Length](https://arxiv.org/pdf/2406.06484)中Section 2的公式推导，可以发现在一个 Chunk 内，从 $S[i]$ 到 $S[i+1]$ 的更新公式为：
 
-$$ S[i+1] = S[i]\;\prod_{t=1}^C \bigl(I - \beta_t\,k_t k_t^{\top}\bigr) 
- + \sum_{t=1}^C \left( \beta_t\,v_t k_t^{\top} \;\prod_{j=t+1}^C \bigl(I - \beta_j\,k_j k_j^{\top}\bigr) \right). $$
+$$ S[i+1] = S[i] \prod_{t=1}^C \bigl(I - \beta_t k_t k_t^{\top}\bigr) + \sum_{t=1}^C \left( \beta_t v_t k_t^{\top} \prod_{j=t+1}^C \bigl(I - \beta_j k_j k_j^{\top}\bigr) \right). $$
 
 其中符号含义：
 - $C$：Chunk size（每个 Chunk 的长度）
@@ -346,27 +345,29 @@ $$ S[i+1] = S[i]\;\prod_{t=1}^C \bigl(I - \beta_t\,k_t k_t^{\top}\bigr)
 
 **WY 表示：让 Chunk 累积可以用矩阵乘法表示**
 
-DeltaNet 的关键观察是：虽然直接计算 $\prod (I - \beta_t k_t k_t^T)$ 会秩爆炸，但利用 Householder 变换的数学性质，这个连乘**依然可以紧凑地表示**为：
-$$ \prod_{i=1}^C \bigl(I - \beta_i\,k_i k_i^{\top}\bigr) = I - W_C K_C^{\top}, $$
+可以看到，高秩矩阵值的状态对于chunk-wise的计算和存储都是一个很大的挑战，因此我们需要引入一些变换来解决这个问题。
+
+针对DeltaNet，一个关键的发现是：虽然直接计算 $\prod (I - \beta_t k_t k_t^T)$ 会秩爆炸，但利用 Householder 变换的数学性质，这个连乘**依然可以紧凑地表示**为：
+$$ \prod_{i=1}^C \bigl(I - \beta_i k_i k_i^{\top}\bigr) = I - W_C K_C^{\top}, $$
 其中 $W_C \in \mathbb{R}^{C \times d}$，$K_C \in \mathbb{R}^{C \times d}$。
 
 这样，Inter-chunk 更新就变成了：
-$$ S[i+1] = S[i]\,\bigl(I - W[i] K[i]^{\top}\bigr) + U[i]^{\top} K[i] = S[i] - (S[i]W[i])K[i]^{\top} + U[i]^{\top} K[i]. $$
+$$ S[i+1] = S[i] \bigl(I - W[i] K[i]^{\top}\bigr) + U[i]^{\top} K[i] = S[i] - (S[i]W[i])K[i]^{\top} + U[i]^{\top} K[i] $$
 
-这是一个标准的**矩阵乘法**，我们可以更好地利用Tensor Core, 计算复杂度也从 $O(Cd^3)$ 降到了 $O(Cd^2)$。
+这是一个标准的**矩阵乘法**，我们可以更好地利用Tensor Core, 计算复杂度 $O(Cd^3)$ 降到了 $O(Cd^2)$，同时状态空间也从 $O(d^2)$ 变成了 $O(dC)$。大大降低了计算和存储IO的负担。 
 
 **UT 变换：让 W 的计算也能并行化**
 
 但是，$W$ 矩阵中的每一行 $w_t$ 的计算仍然还是递归的：
-$$ w_t = \beta_t\,\Bigl(k_t - \sum_{i=1}^{t-1} w_i\,(k_i^{\top} k_t)\Bigr). $$
+$$ w_t = \beta_t \Bigl(k_t - \sum_{i=1}^{t-1} w_i (k_i^{\top} k_t)\Bigr) $$
 
 这又是**串行计算**，无法利用 Tensor Core。
 
 UT 变换通过定义下三角矩阵 $A$（包含 $k_i^T k_j$ 的信息），将递归转化为：
-$$ W = T\,\mathrm{diag}(\beta)\,K, \qquad \text{其中 } T = (I - A)^{-1}. $$
+$$ W = T \mathrm{diag}(\beta) K, \qquad \text{其中 } T = (I - A)^{-1} $$
 
-由于 $A$ 是严格下三角，$T$ 可以通过前向替换高效求解，或者在 Chunk 较小时直接用矩阵乘法。关键是：
-- **计算变成了矩阵运算**，可以调用高度优化的 BLAS 库或 Tensor Core
+由于 $A$ 是严格下三角，$T$ 可以通过前向替换高效求解，或者在 Chunk 较小时直接用矩阵乘法，于是：
+- **计算变成了矩阵运算**，可以调用GPU Tensor Core加速计算
 - **在 Chunk 内并行处理**，不在需要一步步串行计算
 
 **WY 表示 + UT 变换**将 DeltaNet 的 Chunk 内计算转化为了 GPU 友好的矩阵乘法，这让DeltaNet的 Chunk-wise 并行算法真正可行。
@@ -475,7 +476,7 @@ $$S_2 = S_1 M_2 + B_2 = S_0 (M_1 M_2) + (B_1 M_2 + B_2)$$
 2) **难以通过低秩假设优化计算**：
 单步 $M_t = I - \beta_t k_t k_t^T$ 是 rank-1 更新（把一个已有矩阵加上或减去一个rank为1的矩阵）；但两步相乘：
 $$ (I - \beta_2 k_2 k_2^T)(I - \beta_1 k_1 k_1^T)
-= I - \beta_1 k_1 k_1^T - \beta_2 k_2 k_2^T + \beta_1\beta_2\, k_2 (k_2^T k_1) k_1^T $$
+= I - \beta_1 k_1 k_1^T - \beta_2 k_2 k_2^T + \beta_1\beta_2 k_2 (k_2^T k_1) k_1^T $$
 最后的交叉项会不断出现。把一段长度为 $m$ 的连乘写成“单位阵减低秩”的形式时，其有效秩一般会随 $m$ 增长（直观上接近 $O(m)$）。
 这意味着：如果 scan 想只携带低秩因子（比如 $I - W K^T$），那么在 up-sweep 的更高层节点里，$W,K$ 的行数会越来越大——**中间态不再是常数大小**，从而无法像普通 scan 那样用固定 shape 的张量高效实现。
 
