@@ -1,11 +1,11 @@
-# hostname (and path) to the root eg. http://spf13.com/
-baseurl = "https://sword865.github.io/"
 # Site title
 title = "悟剑阁"
 # Copyright
 copyright = "Copyright (c) 2015. All rights reserved."
 # Language
 languageCode = "zh-CN"
+defaultContentLanguage = "zh-cn"
+defaultContentLanguageInSubdir = false
 # Metadata format: "yaml", "toml", "json"
 metaDataFormat = "toml"
 # Theme to use (located in /themes/THEMENAME/)
@@ -33,14 +33,39 @@ hasCJKLanguage = true
     path = 'github.com/hugomods/images'
     disable = false
 
-[[menu.main]]
-    url = "/tags"
-    name = "Tags"
-weight = 3
-[[menu.main]]
-    url = "/posts"
-    name = "Archive"
+# ========== Multilingual Configuration ==========
+[languages]
+  [languages.zh-cn]
+    languageName = "中文"
     weight = 1
+    contentDir = "content/zh-cn"
+    title = "悟剑阁"
+    languageCode = "zh-CN"
+    hasCJKLanguage = true
+    summaryLength = 500
+    [[languages.zh-cn.menu.main]]
+      url = "/tags"
+      name = "标签"
+      weight = 3
+    [[languages.zh-cn.menu.main]]
+      url = "/posts"
+      name = "归档"
+      weight = 1
+
+  [languages.en]
+    languageName = "English"
+    weight = 2
+    contentDir = "content/en"
+    title = "Sword Pavilion"
+    languageCode = "en"
+    [[languages.en.menu.main]]
+      url = "/tags"
+      name = "Tags"
+      weight = 3
+    [[languages.en.menu.main]]
+      url = "/posts"
+      name = "Archive"
+      weight = 1
 
 
 # All parameters below here are optional and can be mixed and matched.

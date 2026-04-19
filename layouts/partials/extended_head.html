@@ -1,0 +1,65 @@
+{{ partial "mathjax.html" . }}
+
+<!-- hreflang alternate links for multilingual SEO -->
+{{ if .IsTranslated }}
+{{ range .Translations }}
+<link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .Permalink }}" />
+{{ end }}
+<link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .Permalink }}" />
+{{ end }}
+
+<!-- Language switcher styles -->
+<style>
+.language-switcher {
+    padding: 10px 25px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+.language-switcher .lang-link {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    text-decoration: none;
+    color: #555;
+    background: #f0f0f0;
+    transition: all 0.2s ease;
+}
+.language-switcher .lang-link:hover {
+    background: #e0e0e0;
+    color: #333;
+}
+.language-switcher .lang-link.active {
+    background: #333;
+    color: #fff;
+}
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .language-switcher .lang-link {
+        color: #ccc;
+        background: #333;
+    }
+    .language-switcher .lang-link:hover {
+        background: #444;
+        color: #fff;
+    }
+    .language-switcher .lang-link.active {
+        background: #fff;
+        color: #333;
+    }
+}
+html[data-dark-mode] .language-switcher .lang-link {
+    color: #ccc;
+    background: #333;
+}
+html[data-dark-mode] .language-switcher .lang-link:hover {
+    background: #444;
+    color: #fff;
+}
+html[data-dark-mode] .language-switcher .lang-link.active {
+    background: #fff;
+    color: #333;
+}
+</style>

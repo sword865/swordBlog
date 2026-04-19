@@ -1,0 +1,47 @@
+<div id="sideContainer" class="side-container">
+    {{ if eq .Title .Site.Title}}
+    <a class="a-block nav-head active" href="{{ "" | absLangURL }}">
+    {{ else }}
+    <a class="a-block nav-head false" href="{{ "" | absLangURL }}">
+    {{ end }}
+        <div class="nav-title">
+            {{.Site.Title}}
+        </div>
+        {{ with .Site.Params.subtitle }}
+        <div class="nav-subtitle">
+            {{.}}
+        </div>
+        {{ end }}
+    </a>
+
+    <div class="nav-link-list">
+        {{ $current := .RelPermalink | absLangURL }}
+        {{ range .Site.Menus.main }}
+            {{$actived := "false"}}
+            {{if hasPrefix  $current (.URL|absLangURL)}}
+                {{$actived = "active"}}
+            {{end}}
+            {{ if .HasChildren }}
+            <div class="a-block" class="nav-link-item {{$actived}}" v-on:click="isHidden = !isHidden">
+                {{ .Name }}
+                <div class="nav-link-subitem" v-if="!isHidden">
+                    {{ range .Children }}
+                    <li><a href="{{ .URL | absLangURL }}"> {{ .Name }}</a></li>
+                    {{ end }}
+                </div>
+            </div>
+            {{ else }}
+            <a class="a-block nav-link-item {{ $actived }}" href="{{ .URL | absLangURL }}">
+                {{ .Name }}
+            </a>
+            {{ end }}
+        {{ end }}
+    </div>
+
+    {{- partial "language-switcher.html" . -}}
+
+    <div class="nav-footer">
+        {{partial "copyright.html" .}}
+    </div>
+    
+</div>

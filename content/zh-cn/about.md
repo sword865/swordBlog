@@ -1,6 +1,5 @@
 +++
 title = '关于'
-menus = 'main'
 author = 'sword865'
 layout = 'page'
 +++
