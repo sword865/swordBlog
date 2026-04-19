@@ -1,6 +1,7 @@
 ﻿+++
 date = '2026-01-01T15:23:41+08:00'
 title = 'Linear Attention基础-工程篇'
+translationKey = 'linear-attention-fundamentals-engineering'
 author = "sword865"
 type = "post"
 tags = ["Attention", "LLM", "Linear Attention", "Triton"]

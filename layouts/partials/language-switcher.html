@@ -1,7 +1,46 @@
 <div class="language-switcher">
-    {{ range $.Site.Home.AllTranslations }}
-    <a class="lang-link{{ if eq .Language.Lang $.Site.Language.Lang }} active{{ end }}" href="{{ .Permalink }}">
-        {{ .Language.LanguageName }}
-    </a>
+    {{ if .IsTranslated }}
+        {{- $currentLang := $.Site.Language.Lang -}}
+        {{ range .AllTranslations }}
+            {{- $translPerma := .RelPermalink -}}
+            {{- $translLang := .Language.Lang -}}
+            {{- $skip := false -}}
+            {{/* A translation is canonical if it lives at the expected URL prefix for its language.
+                 - Default language (home = "/"): canonical = URL does NOT start with any /{lang}/ prefix
+                 - Non-default (home = "/{lang}/"): canonical = URL starts with that prefix */}}
+            {{- range $.Site.Sites -}}
+                {{- if eq .Language.Lang $translLang -}}
+                    {{- $siteHome := .Home.RelPermalink -}}
+                    {{- if eq $siteHome "/" -}}
+                        {{/* Default lang: reject any page under a /{xxx}/ prefix */}}
+                        {{- range $.Site.Sites -}}
+                            {{- $p := .Home.RelPermalink -}}
+                            {{- if and (ne $p "/") (hasPrefix $translPerma $p) -}}
+                                {{- $skip = true -}}
+                            {{- end -}}
+                        {{- end -}}
+                        {{- if hasPrefix $translPerma (printf "/%s/" $translLang) -}}
+                            {{- $skip = true -}}
+                        {{- end -}}
+                    {{- else -}}
+                        {{/* Non-default lang: reject pages NOT under the expected prefix */}}
+                        {{- if not (hasPrefix $translPerma $siteHome) -}}
+                            {{- $skip = true -}}
+                        {{- end -}}
+                    {{- end -}}
+                {{- end -}}
+            {{- end -}}
+            {{ if not $skip }}
+            <a class="lang-link{{ if eq $translLang $currentLang }} active{{ end }}" href="{{ .Permalink }}">
+                {{ .Language.LanguageName }}
+            </a>
+            {{ end }}
+        {{ end }}
+    {{ else }}
+        {{ range $.Site.Home.AllTranslations }}
+        <a class="lang-link{{ if eq .Language.Lang $.Site.Language.Lang }} active{{ end }}" href="{{ .Permalink }}">
+            {{ .Language.LanguageName }}
+        </a>
+        {{ end }}
     {{ end }}
 </div>

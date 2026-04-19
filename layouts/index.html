@@ -1,0 +1,72 @@
+
+{{ define "main" }}
+
+    <div class="post-list-container post-list-container-no-background">
+        {{- $pages := slice -}}
+        {{- $currentHome := $.Site.Home.RelPermalink -}}
+        {{- range .Site.RegularPages -}}
+            {{- $rel := .RelPermalink -}}
+            {{- $skip := false -}}
+            {{- if eq $currentHome "/" -}}
+                {{/* Default language site: exclude pages from non-default lang sites */}}
+                {{- range $.Site.Sites -}}
+                    {{- $prefix := .Home.RelPermalink -}}
+                    {{- if and (ne $prefix "/") (hasPrefix $rel $prefix) -}}
+                        {{- $skip = true -}}
+                    {{- end -}}
+                {{- end -}}
+                {{/* Also exclude default-lang aliases under /{lang}/ */}}
+                {{- $defaultLangPrefix := printf "/%s/" $.Site.Language.Lang -}}
+                {{- if hasPrefix $rel $defaultLangPrefix -}}
+                    {{- $skip = true -}}
+                {{- end -}}
+            {{- else -}}
+                {{/* Non-default language site: only include pages belonging to this site */}}
+                {{- if not (hasPrefix $rel $currentHome) -}}
+                    {{- $skip = true -}}
+                {{- end -}}
+            {{- end -}}
+            {{- if and (not $skip) (ne .Params.hidden true) -}}
+                {{- $pages = $pages | append . -}}
+            {{- end -}}
+        {{- end -}}
+        {{ $paginator := .Paginate $pages }}
+        {{range $paginator.Pages }}
+            <a href="{{.RelPermalink}}" class="a-block">
+                <div class="post-item-wrapper">
+                    <div class="post-item post-item-no-divider">
+                        <div class="post-item-info-wrapper">
+                            <div class="post-item-title">
+                                {{.Title}}
+                            </div>
+                            <div class="post-item-summary">
+                                {{ if .Description }}
+                                    {{ .Description }}
+                                {{ else }}
+                                    {{ .Summary }}
+                                {{ end }}
+                            </div>
+                            {{ partial "post-item-meta.html" . }}
+                        </div>
+                        {{ $featured_image := .Params.featured_image }}
+                        {{ if $featured_image }}
+                            {{ $image := .Resources.GetMatch (.Params.featured_image) }}
+                            <div class="post-item-image-wrapper">
+                            <div class="post-item-image"
+                            {{ if $image }}
+                                {{ $thumbnail := $image.Resize "690x360" }}
+                                 style="background-image: url('{{ $thumbnail.RelPermalink }}')"
+                            {{ else }}
+                            
+                                style="background-image: url('{{ $featured_image | absURL}}')"
+                            {{ end }}
+                            ></div>
+                            </div>
+                        {{ end }}
+                    </div>
+                </div>
+        {{ end }}
+        </a>
+    </div>
+
+{{ end }}
