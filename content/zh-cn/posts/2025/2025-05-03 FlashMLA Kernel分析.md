@@ -1,6 +1,7 @@
 +++
 date = '2025-05-03T15:51:35+08:00'
 title = 'Flash MLA Kernel分析'
+translationKey = 'flashmla-kernel-analysis'
 author = "sword865"
 type = "post"
 tags = ["CUDA", "DeepSeek", "LLM"]

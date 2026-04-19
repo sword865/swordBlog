@@ -44,6 +44,10 @@ hasCJKLanguage = true
     hasCJKLanguage = true
     summaryLength = 500
     [[languages.zh-cn.menu.main]]
+      url = "/about"
+      name = "关于"
+      weight = 5
+    [[languages.zh-cn.menu.main]]
       url = "/tags"
       name = "标签"
       weight = 3
@@ -58,6 +62,11 @@ hasCJKLanguage = true
     contentDir = "content/en"
     title = "Sword Pavilion"
     languageCode = "en"
+    summaryLength = 200
+    [[languages.en.menu.main]]
+      url = "/about"
+      name = "About"
+      weight = 5
     [[languages.en.menu.main]]
       url = "/tags"
       name = "Tags"
